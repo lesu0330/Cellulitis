@@ -1,0 +1,242 @@
+// Cellulitis TEMPLATE
+// Homework Assignment 3 2ip90
+/**
+ * @authors
+ * @ids
+ * @group
+ * @date
+ */
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+class Cellulitis2 { 
+
+    Scanner scanner = new Scanner(System.in);
+
+    void run() {
+
+        String automaChoice = scanner.next();
+        int cellNum = scanner.nextInt();
+        int genNum = scanner.nextInt();
+        boolean[] currentGeneration = new boolean[cellNum + 2];                              // used to store the current generation
+        String start = scanner.next();
+        ArrayList<Integer> init = new ArrayList<Integer>();
+        while (scanner.hasNextInt()) {
+
+            init.add(scanner.nextInt());
+
+        } 
+
+        String end = scanner.next();
+        
+        Arrays.fill(currentGeneration, Boolean.FALSE);
+
+        for (int i = 1; i < currentGeneration.length; i++) {
+
+            if ( init.contains(i)) {
+                currentGeneration[i] = true;
+            }
+        }
+        
+        // for (int i = 0; i < init.size(); i++) {
+        //     System.out.println(init.get(i));
+        // }
+        // System.out.println(Arrays.toString(initialGen));
+        
+        // draw(currentGeneration, genNum);            // outputs the initial generation
+        // nextGenerationA(currentGeneration);
+
+        if (automaChoice.equals("A")) {
+
+            draw(currentGeneration, genNum, automaChoice);
+            
+        } else if (automaChoice.equals("B")) {
+            
+            draw(currentGeneration, genNum, automaChoice);
+        }
+
+        // genReapeat(genNum);
+
+
+
+    }
+
+    String aOption() {
+
+        // method for option a
+
+        return "hi";
+    }
+
+    String bOption() {
+
+        // method for option b
+
+        return "hi";
+    }
+
+    // outputs the current generaion (the output style needs to be fixed; take way the commas and the brackets that are showen in the output)
+    void draw(boolean[] generation, int a, String automaChoice) {
+
+        if ( a < 0) {
+
+            a = -1;
+            
+        } else {
+
+            String[] currentGen = new String[generation.length];
+
+            for (int i = 0; i < generation.length; i++) {
+    
+                if (i == 0) {
+
+                    currentGen[i] = "";
+                    
+                } else if ( i == generation.length - 1 ) {
+
+                    currentGen[i] = "";
+
+                } else if ( generation[i] == false ) {
+    
+                    currentGen[i] = " ";
+    
+                } else if (generation[i] == true) {
+    
+                    currentGen[i] = "*";
+                }
+            }
+
+            if (automaChoice.equals("A")) {
+
+                nextGenerationA(generation);
+                for (int i = 0; i < currentGen.length; i++) {
+
+                    System.out.print(currentGen[i]);
+                }
+                System.out.print("\n");
+            
+                // System.out.println(Arrays.toString(currentGen)); 
+                draw(generation, a-1, automaChoice);
+
+            } else if (automaChoice.equals("B")) {
+                nextGenerationB(generation);
+                for (int i = 0; i < currentGen.length; i++) {
+
+                    System.out.print(currentGen[i]);
+                }
+                System.out.print("\n");
+                
+                // System.out.println(Arrays.toString(currentGen)); 
+                draw(generation, a-1, automaChoice);
+            }
+
+            // nextGenerationA(generation);
+            // for (int i = 0; i < currentGen.length; i++) {
+
+            //     System.out.print(currentGen[i]);
+            // }
+            // System.out.print("\n");
+            
+            // // System.out.println(Arrays.toString(currentGen)); 
+            // draw(generation, a-1, automaChoice);
+
+
+        }
+        // // stores the values of the current generation that we want to output
+        // // if position i in generation == false, then "currentGen" stores a "" in currentGen[i]
+        // // if poistion i in generation == true, then "curentGen" stores a "*";
+        // String[] currentGen = new String[generation.length];
+
+        // for (int i = 0; i < generation.length; i++) {
+
+        //     if ( generation[i] == false ) {
+
+        //         currentGen[i] = "";
+
+        //     } else {
+
+        //         currentGen[i] = "*";
+        //     }
+        // }
+
+        // System.out.println(Arrays.toString(currentGen));  // change so that it does not print the parantethis or the commas
+        // // nextGenerationA(generation); // true false true true
+    }
+
+    boolean[] nextGenerationA(boolean[] generation) {
+        
+        boolean[] oldGeneration = new boolean[generation.length];
+        oldGeneration = generation;
+
+        for (int i = 1; i < generation.length - 1; i++ ) {
+            
+            if (oldGeneration[i] == true ){
+
+                if ((oldGeneration[i+1] == true && oldGeneration[i-1] == true)) {
+
+                    generation[i] = false;
+                    
+                } else if ((oldGeneration[i+1] == false && oldGeneration[i-1] == false)) {
+
+                    generation[i] = false;
+
+                } else {
+
+                    generation[i] = true;
+                }
+                
+            } else if (oldGeneration[i] == false) {
+
+                if (oldGeneration[i + 1] == false && oldGeneration[ i - 1] == false ) {
+
+                    generation[i] = false;
+                
+                } else {
+
+                    generation[i] = true;
+                }
+                
+            } 
+        }
+
+        return generation;
+        
+    }
+
+    boolean[] nextGenerationB(boolean[] generation) {
+
+        for (int i = 1; i < generation.length - 1; i++ ){
+
+            if ( generation[i] == true){
+                if ( generation[i+1] == false){
+                    generation[i] = true;
+                }else {
+                    generation[i] = false;
+                }
+            }else if ( generation[i] == false) {
+                
+                if ((generation[i+1] == true && generation[i-1] == true)) {
+
+                    generation[i] = false;
+                    
+                } else if ((generation[i+1] == false && generation[i-1] == false)) {
+
+                    generation[i] = false;
+
+                } else {
+
+                    generation[i] = true;
+                }
+            }                    
+                }
+            return generation;
+        }
+    
+    
+    public static void main(String[] args) {
+
+        new Cellulitis2().run();
+    }
+}
